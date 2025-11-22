@@ -1,0 +1,9 @@
+# Tools required
+
+For this project, you need the following tools: Wi-Fi adapter that supports packet injection and monitoring mode. It needs to be compatible with both Windows and Kali Linux. 
+
+I will be using the Panda Wireless: https://www.amazon.com/gp/product/B00762YNMG/ref=ewc_pr_img_1?smid=A1K5RDMQ6V4659&psc=1
+
+If you are running Kali natively, it only needs to work on Kali. If running Kali on a virtual machine, it needs to work on both. You are going to need a Linux OS, specifically the Kali flavor. The aircrack-ng suite. Finally, a router that is running WPA2. I will be using a TP-Link router.
+
+Have a wordlist of your choice ready to use. I will be using the rockyou.txt wordlist. Unzip the file if not already.
