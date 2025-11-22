@@ -31,11 +31,11 @@ To set up, plug in the Wi-Fi adapter into your USB port. Open virtual box and go
 
 # Execution
 
-See what network interfaces are on the Kali machine. You should see wlan0 for your adapter.
+See what network interfaces are on the Kali machine. You should see wlan0 for your adapter in the DOWN state.
 
 ip addr
 
-Kill any processes that could interfere with Wi-Fi adapter with monitoring mode.
+Kill any processes that could interfere with Wi-Fi adapter with monitoring mode. For example, the wpa_supplicant process.
 
 sudo airmon-ng check kill
 
@@ -51,11 +51,11 @@ See all nearby available networks and get the routers's MAC address and channel.
 
 sudo airodump-ng wlan0mon
 
-Test to see device connectivity with the router by authenticating to it using your phone or another device.
+Test to see device connectivity with the router by authenticating to it using your phone or another device. 
 
 sudo airodump-ng wlan0mon -d 60:83:E7:0B:47:62
 
-1st terminal, replace the channel number and BSSID with your own Router's info. Replace hack1 with your desired file name for the capture. Focus the adapter on your target and capture the 4-way handshake. -c is the channel, --bssid is the MAC address of the target router, -w is the option to output the file to save the handshake.
+1st terminal, replace the channel number and BSSID with your own Router's info. Replace hack1 with your desired file name for the capture. Focus the adapter on your target and capture the 4-way handshake. -c is the channel, --bssid is the MAC address of the target router, -w is the option to output the file to save the handshake. Once a handshake is captured and you exit the process, you should see a .cap file in your current working directory.
 
 sudo airodump-ng -w hack1 -c 3 --bssid 60:83:E7:0B:47:62 wlan0mon
 
