@@ -8,3 +8,15 @@ It aims to demonostrate on how to get the password and crack it. It is meant to 
 People tend to not think of having strong network passwords because they think an attacker won't target them because they have nothing to offer. Also, they think an attacker has to be close to the area to crack their password. Also, people do not like entering long, complicated passwords everytime to authetnicate a new device to their network.
 
 In this project, you can use a Wi-Fi adapter to scan nearby networks, unathenticate devices to it, capture the 4-way handshake that contains the unique signature of a device, and use a wordlist for a dictionary attack to crack the password.
+
+For this project, you need the following tools: Wi-Fi adapter that supports packet injection and monitoring mode. It needs to be compatible with both Windows and Kali Linux. 
+
+I will be using the Panda Wireless: https://www.amazon.com/gp/product/B00762YNMG/ref=ewc_pr_img_1?smid=A1K5RDMQ6V4659&psc=1
+
+If you are running Kali natively, it only needs to work on Kali. If running Kali on a virtual machine, it needs to work on both. You are going to need a Linux OS, specifically the Kali flavor. The aircrack-ng suite. Finally, a router that is running WPA2. I will be using a TP-Link router.
+
+# Install aircrack-ng suite if not already on your Kali machine
+
+sudo apt install aircrack-ng
+
+To set up, plug in the Wi-Fi adapter into your USB port. Open virtual box and go to settings on the Kali Linux VM. Make sure the check enable USB controller and USB 2.0 (OHCI + EHCI) controller. Click on the green check mark and add "Ralink 802.11 n WLAN". Once logged in on the VM, unplug the adapter and plug it back in. Run "ip addr" and you should a new interface for the adapter.
